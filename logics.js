@@ -1,6 +1,9 @@
-import { HIT, ATTACK, LOGS } from './consts.js'
-import { createElement, random } from './utils.js'
-import { playerWinTitle, createReloadButton, generateLogs } from './visuals.js'
+import { HIT, ATTACK } from './consts.js'
+import { random } from './utils.js'
+import { playerWinTitle, createReloadButton, generateLogs } from './visual.js'
+
+const $arenas = document.querySelector('.arenas')
+const $formFight = document.querySelector('.control')
 
 export function playerWin(player1, player2) {
 

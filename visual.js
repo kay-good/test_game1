@@ -1,3 +1,8 @@
+import { createElement, random, dateText } from './utils.js'
+import { LOGS } from './consts.js'
+
+const $arenas = document.querySelector('.arenas')
+const $chat = document.querySelector('.chat')
 
 
 export function playerWinTitle(name) {
@@ -23,41 +28,41 @@ export function createReloadButton() {
     $arenas.appendChild($reloadWrap)
 }
 
-export function generateLogs(type, player1, player2, damage) {
+export function generateLogs(type, {name: playerName1}, {name: playerName2, hp}, damage) {
     let text = ''
     let el = ''
-    const date = new Date()
-    const dateText = `${date.getHours()}:${date.getMinutes()}`
+    
+    const date = dateText()
     switch (type) {
         case 'start':
             text = LOGS[type]
-            .replace('[time]', dateText)
-            .replace('[player1]', player1.name)
-            .replace('[player2]', player2.name)
+            .replace('[time]', date)
+            .replace('[player1]', playerName1)
+            .replace('[player2]', playerName2)
             el = `<p> ${text} </p>`
             console.log(el)
             break
         case 'end':
-            text = LOGS[type][random(logs[type].length - 1)]
-            .replace('[playerWins]', player1.name)
-            .replace('[playerLose]', player2.name)
+            text = LOGS[type][random(LOGS[type].length - 1)]
+            .replace('[playerWins]', playerName1)
+            .replace('[playerLose]', playerName2)
             el = `<p> ${text} </p>`
             break
         case 'hit':
-            text = LOGS[type][random(logs[type].length - 1)]
-            .replace('[playerKick]', player1.name)
-            .replace('[playerDefence]', player2.name)
-            el = `<p>${dateText} - ${text} -${damage} [${player2.hp}/100]</p>`
+            text = LOGS[type][random(LOGS[type].length - 1)]
+            .replace('[playerKick]', playerName1)
+            .replace('[playerDefence]', playerName2)
+            el = `<p>${date} - ${text} -${damage} [${hp}/100]</p>`
             break 
         case 'defence':
-            text = LOGS[type][random(logs[type].length - 1)]
-            .replace('[playerKick]', player1.name)
-            .replace('[playerDefence]', player2.name)
-            el = `<p>${dateText} - ${text}  [${player2.hp}/100]</p>`
+            text = LOGS[type][random(LOGS[type].length - 1)]
+            .replace('[playerKick]', playerName1)
+            .replace('[playerDefence]', playerName2)
+            el = `<p>${date} - ${text}  [${hp}/100]</p>`
             break  
         case 'draw':
             text = LOGS[type]
-            el = `<p> ${text} </p>`
+            el = `<p>${date} ${text} </p>`
             break     
     }
     
