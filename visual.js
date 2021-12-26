@@ -21,7 +21,7 @@ export function createReloadButton() {
 
     $button.innerText = 'Restart'
     $reloadWrap.addEventListener('click', function() {
-        window.location.reload()
+        window.location.pathname = 'index.html'
     })
 
     $reloadWrap.appendChild($button)

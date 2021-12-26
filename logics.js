@@ -26,23 +26,12 @@ export function playerWin(player1, player2) {
     }
 }
 
-export function enemyAttack() {
-    const hit = ATTACK[random(3) - 1]
-    const defence = ATTACK[random(3) - 1]
 
-    return {
-        value: random(HIT[hit]),
-        hit,
-        defence
-    }
-}
-
-export function playerAttack() {
+export async function playerAttack() {
     const attack = {}
 
     for (let item of $formFight) {
         if (item.checked && item.name === 'hit') {
-            attack.value = random(HIT[item.value])
             attack.hit = item.value
         }
         if (item.checked && item.name === 'defence') {
@@ -50,5 +39,11 @@ export function playerAttack() {
         }
         item.checked = false
     }
-    return attack
+    const responce = await fetch('http://reactmarathon-api.herokuapp.com/api/mk/player/fight', {
+        method: 'POST',
+        body: JSON.stringify(attack)
+    }).then(res => res.json())
+    
+    console.log(responce)
+    return responce
 }
